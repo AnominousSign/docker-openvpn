@@ -1,7 +1,7 @@
 DOCKER_REGISTRY = index.docker.io
 IMAGE_NAME = openvpn
 IMAGE_VERSION = azure-ad
-IMAGE_ORG = flaccid
+IMAGE_ORG = industrieco
 IMAGE_TAG = $(DOCKER_REGISTRY)/$(IMAGE_ORG)/$(IMAGE_NAME):$(IMAGE_VERSION)
 
 WORKING_DIR := $(shell pwd)

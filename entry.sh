@@ -120,8 +120,10 @@ case $AUTH_TYPE in
     sed -i "s|\(AD_server=\).*|\1\"$ADCHECK_SERVER\"|" /etc/openvpn/openvpnadcheck.conf
     sed -i "s|\(AD_domain=\).*|\1\"$ADCHECK_DOMAIN\"|" /etc/openvpn/openvpnadcheck.conf
     sed -i "s|\(AD_dn=\).*|\1\"$ADCHECK_GROUPDN\"|" /etc/openvpn/openvpnadcheck.conf
-    # Update openvpnadcheck.lua to use the user container name instead of the sAMAccountName
-    sed -i -e 's|sAMAccountName|cn|g' /etc/openvpn/openvpnadcheck.lua
+    # Update openvpnadcheck.lua to use the user principal name instead of the sAMAccountName
+    sed -i -e 's|sAMAccountName|userPrincipalName|g' \
+      -e 's|string.lower(os.getenv("username")) |string.lower(os.getenv("username").."@"..AD_domain) |' \
+           /etc/openvpn/openvpnadcheck.lua
     ;;
   azuread)
     ([ -z "$AZUREAD_TENANT_ID" ] || [ -z "$AZUREAD_CLIENT_ID" ]) && \
